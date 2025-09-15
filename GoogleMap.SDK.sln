@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.API", "GoogleMap.SDK.API\GoogleMap.SDK.API.csproj", "{59EE6B30-24BB-4253-9280-A07C08EF2BDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.Contract", "GoogleMap.SDK.Contract\GoogleMap.SDK.Contract.csproj", "{FA4AED75-020D-4385-BD1C-8321BD49E4DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.Share", "GoogleMap.SDK.Share\GoogleMap.SDK.Share.csproj", "{4F4FC13B-8AA4-4EA2-A0B7-461A935B627F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59EE6B30-24BB-4253-9280-A07C08EF2BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EE6B30-24BB-4253-9280-A07C08EF2BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EE6B30-24BB-4253-9280-A07C08EF2BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EE6B30-24BB-4253-9280-A07C08EF2BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4AED75-020D-4385-BD1C-8321BD49E4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4AED75-020D-4385-BD1C-8321BD49E4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4AED75-020D-4385-BD1C-8321BD49E4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4AED75-020D-4385-BD1C-8321BD49E4DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4FC13B-8AA4-4EA2-A0B7-461A935B627F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4FC13B-8AA4-4EA2-A0B7-461A935B627F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4FC13B-8AA4-4EA2-A0B7-461A935B627F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4FC13B-8AA4-4EA2-A0B7-461A935B627F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE728F21-61AE-462F-AD79-E942622BCDF0}
+	EndGlobalSection
+EndGlobal
