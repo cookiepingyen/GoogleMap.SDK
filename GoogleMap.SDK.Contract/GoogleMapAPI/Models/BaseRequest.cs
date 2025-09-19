@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Attributes;
 
 namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
 {
@@ -16,13 +17,14 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
 
         Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
 
-        public string ToUri(string baseUri)
+        protected virtual string BaseURL { get; } = "https://maps.googleapis.com/maps/api";
+        protected abstract string Endpoint { get; }
+        public string ToUri(string key = "")
         {
             FormatQueryString(this);
             string queryString = AssembleKeyValuePairs();
-
-            string finalUrl = $"{baseUri}?{queryString}&key={GoogleSigned.API_KEY}";
-
+            string apiKey = !String.IsNullOrEmpty(key) ? $"&key={key}" : "";
+            string finalUrl = $"{BaseURL}/{Endpoint}?{queryString}{apiKey}";
             return finalUrl;
         }
 
@@ -80,11 +82,11 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
                 {
                     // 這邊可能為 Restructure or Atleast
                     // 裝飾模式
-                    var temp = propertyInfo.GetValue(request);
+                    var propertyObject = propertyInfo.GetValue(request);
                     RestructureAttribute restructureAttribute = propertyInfo.GetCustomAttribute<RestructureAttribute>();
                     if (restructureAttribute != null)
                     {
-                        FormatQueryString(temp, SearchType.Restructure);
+                        FormatQueryString(propertyObject, SearchType.Restructure);
                         keyValuePairs.Where(keyValue => keyValue.Key.Contains("re-"));
                         ReAssignKeyValue(propertyInfo.Name, restructureAttribute.Symbol.ToString());
                     }
@@ -93,7 +95,7 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
                     AtleastAttribute atleastAttribute = propertyInfo.GetCustomAttribute<AtleastAttribute>();
                     if (atleastAttribute != null)
                     {
-                        FormatQueryString(temp, SearchType.Atleast);
+                        FormatQueryString(propertyObject, SearchType.Atleast);
                         int atleastCount = keyValuePairs.Where(keyValue => keyValue.Key.Contains("atleast-")).Count();
                         RollbackKeyValue();
                         if (atleastCount < atleastAttribute.constructureNum)

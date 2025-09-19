@@ -9,10 +9,10 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI
 {
     public interface IGoogleAPIContext
     {
-        IPlaceService Place { get; set; }
-        IRouteService Route { get; set; }
-        IStaticMapService StaticMap { get; set; }
-        IGeocodingService Geocoding { get; set; }
-        IDirectionService Direction { get; set; }
+        IPlaceService Place { get; }
+        IRouteService Route { get; }
+        IStaticMapService StaticMap { get; }
+        IGeocodingService Geocoding { get; }
+        IDirectionService Direction { get; }
     }
 }
