@@ -141,6 +141,9 @@
     <Compile Include="GoogleMapAPI\Models\Place\PlacePhoto\PlacePhotoResModel.cs" />
     <Compile Include="GoogleMapAPI\Models\Place\TextSearch\TextSearchRequest.cs" />
     <Compile Include="GoogleMapAPI\Models\Place\TextSearch\TextSearchResModel.cs" />
+    <Compile Include="GoogleMapAPI\Models\Routes\RoutesPostModel.cs" />
+    <Compile Include="GoogleMapAPI\Models\Routes\RoutesRequest.cs" />
+    <Compile Include="GoogleMapAPI\Models\Routes\RoutesResModel.cs" />
     <Compile Include="GoogleMapAPI\Models\Size.cs" />
     <Compile Include="GoogleMapAPI\Service\IDirectionService.cs" />
     <Compile Include="GoogleMapAPI\Service\IGeocodingService.cs" />
@@ -153,5 +156,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

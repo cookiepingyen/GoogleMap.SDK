@@ -38,7 +38,6 @@ namespace GoogleMap.SDK.API.Services.Place
         public Task<TextSearchResModel> TextSearch(TextSearchRequest textSearchRequest)
         {
             return base.GetAsync<TextSearchResModel>(textSearchRequest);
-
         }
 
         public Task<PlaceAutocompleteResModel> PlaceAutocomplete(PlaceAutocompleteRequest placeAutocompleteRequest)
@@ -53,7 +52,7 @@ namespace GoogleMap.SDK.API.Services.Place
 
         public Task<Byte[]> PlacePhoto(PlacePhotoRequest placePhotoRequest)
         {
-            return base.GetAsync<Byte[]>(placePhotoRequest);
+            return base.GetByteArrayAsync(placePhotoRequest);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GoogleMap.SDK.API.Services
 {
     public class BaseService
     {
-        private string apiKey;
+        protected string apiKey;
         protected IHttpRequest _httpRequest;
 
         public BaseService(IHttpRequest request, IConfiguration configuration)
@@ -27,11 +27,22 @@ namespace GoogleMap.SDK.API.Services
             var response = await _httpRequest.GetAsync<T>(url);
             return response;
         }
+
+
+        public async Task<byte[]> GetByteArrayAsync(BaseRequest request)
+        {
+            string url = request.ToUri(apiKey);
+            var response = await _httpRequest.GetByteArrayAsync(url);
+            return response;
+        }
+
         public async Task<T> PostAsync<T>(BaseRequest request, object data, Dictionary<string, string> urlParam = null, JsonSerializerSettings settings = null)
         {
             string url = request.ToUri(apiKey);
             var response = await _httpRequest.PostAsync<T>(url, data, urlParam, settings);
             return response;
         }
+
+
     }
 }

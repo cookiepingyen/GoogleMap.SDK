@@ -17,7 +17,7 @@ namespace GoogleMap.SDK.API
         private IDirectionService _direction;
         public IPlaceService Place => _place;
 
-        public IRouteService Route => throw new NotImplementedException();
+        public IRouteService Route => _route;
 
         public IStaticMapService StaticMap => throw new NotImplementedException();
 
@@ -26,9 +26,10 @@ namespace GoogleMap.SDK.API
         public IDirectionService Direction => throw new NotImplementedException();
 
 
-        public GoogleAPIContext(IPlaceService Place)
+        public GoogleAPIContext(IPlaceService Place, IRouteService Route)
         {
             this._place = Place;
+            this._route = Route;
         }
     }
 }

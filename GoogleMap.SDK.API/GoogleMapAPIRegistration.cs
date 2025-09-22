@@ -1,4 +1,5 @@
 ﻿using GoogleMap.SDK.API.Services.Place;
+using GoogleMap.SDK.API.Services.Routes;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Service;
 using HttpUtility;
@@ -20,6 +21,7 @@ namespace GoogleMap.SDK.API
             collection.AddSingleton<IHttpRequest, HttpRequest>();
             collection.AddSingleton<IGoogleAPIContext, GoogleAPIContext>();
             collection.AddTransient<IPlaceService, PlaceSercvice>();
+            collection.AddTransient<IRouteService, RoutesService>();
 
 
 
