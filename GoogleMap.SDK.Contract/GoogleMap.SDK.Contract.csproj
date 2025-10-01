@@ -145,6 +145,8 @@
     <Compile Include="GoogleMapAPI\Models\Routes\RoutesRequest.cs" />
     <Compile Include="GoogleMapAPI\Models\Routes\RoutesResModel.cs" />
     <Compile Include="GoogleMapAPI\Models\Size.cs" />
+    <Compile Include="GoogleMapAPI\Models\StaticMap\Markers.cs" />
+    <Compile Include="GoogleMapAPI\Models\StaticMap\StaticMapRequest.cs" />
     <Compile Include="GoogleMapAPI\Service\IDirectionService.cs" />
     <Compile Include="GoogleMapAPI\Service\IGeocodingService.cs" />
     <Compile Include="GoogleMapAPI\Service\IPlaceService.cs" />

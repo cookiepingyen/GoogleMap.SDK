@@ -13,23 +13,26 @@ namespace GoogleMap.SDK.API
         private IPlaceService _place;
         private IRouteService _route;
         private IStaticMapService _staticMap;
-        private IPlaceService _geocoding;
+        private IGeocodingService _geocoding;
         private IDirectionService _direction;
         public IPlaceService Place => _place;
 
         public IRouteService Route => _route;
 
-        public IStaticMapService StaticMap => throw new NotImplementedException();
+        public IStaticMapService StaticMap => _staticMap;
 
-        public IGeocodingService Geocoding => throw new NotImplementedException();
+        public IGeocodingService Geocoding => _geocoding;
 
-        public IDirectionService Direction => throw new NotImplementedException();
+        public IDirectionService Direction => _direction;
 
 
-        public GoogleAPIContext(IPlaceService Place, IRouteService Route)
+        public GoogleAPIContext(IPlaceService place, IRouteService route, IStaticMapService staticMap, IGeocodingService geocoding, IDirectionService directionService)
         {
-            this._place = Place;
-            this._route = Route;
+            this._place = place;
+            this._route = route;
+            this._staticMap = staticMap;
+            this._geocoding = geocoding;
+            this._direction = directionService;
         }
     }
 }

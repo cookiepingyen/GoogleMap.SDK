@@ -10,10 +10,12 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Attributes
     {
         public String RestructureName { get; set; }
         public char Symbol { get; set; }
-        public RestructureAttribute(string field, char symbol)
+        public bool ShowFieldName { get; set; }
+        public RestructureAttribute(string field, char symbol, bool showFieldName = false)
         {
             this.RestructureName = field;
             this.Symbol = symbol;
+            this.ShowFieldName = showFieldName;
         }
     }
 }

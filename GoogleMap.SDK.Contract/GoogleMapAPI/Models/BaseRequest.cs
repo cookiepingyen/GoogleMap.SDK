@@ -64,38 +64,61 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
 
                 if (propertyInfo.PropertyType.IsArray)
                 {
-                    List<string> items = new List<string>();
+                    List<object> items = new List<object>();
                     foreach (var arrayItem in (IEnumerable)propertyInfo.GetValue(request))
                     {
-                        items.Add(arrayItem.ToString());
+                        items.Add(arrayItem);
                     }
+
+                    RestructureAttribute restructureAttribute = propertyInfo.GetCustomAttribute<RestructureAttribute>();
+                    if (restructureAttribute != null)
+                    {
+                        foreach (object item in items)
+                        {
+                            //將當前物件丟回去進行遞迴,把每一個property全部都塞到 keyValuePairs 的 Dictionarty裡面
+                            FormatQueryString(item, SearchType.Restructure);
+                            keyValuePairs.Where(keyValue => keyValue.Key.Contains("re-"));
+                            //從keyValuePairs 找出re-相關的Dictionary裡面的item , 重新根據 restructureAttribute 重組成想要的字串
+                            //re-width,300 re-height,400
+                            //size,300x400
+                            ReAssignKeyValue(item.GetType().Name.ToLower(), restructureAttribute.Symbol.ToString(), restructureAttribute.ShowFieldName);
+
+                        }
+                    }
+
 
                     // 如果陣列有掛上Separator, 就使用 Separator.symbol 當作分隔符
                     SeparatorAttribute separatorAttribute = propertyInfo.GetCustomAttribute<SeparatorAttribute>();
-                    string separator = (separatorAttribute == null) ? "%2C" : separatorAttribute.symbol.ToString();
+                    if (separatorAttribute != null)
+                    {
+                        string separator = (separatorAttribute == null) ? "%2C" : separatorAttribute.symbol.ToString();
 
-                    string value = string.Join(separator, items);
-                    string key = propertyInfo.Name;
-                    keyValuePairs.Add(key, value);
+                        string value = string.Join(separator, items);
+                        string key = separatorAttribute.hideFieldName ? $"re_{propertyInfo.DeclaringType.Name.ToLower()}-" : propertyInfo.Name;
+                        keyValuePairs.Add(key, value);
+                    }
+
                 }
                 else if (propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType != typeof(string))
                 {
                     // 這邊可能為 Restructure or Atleast
                     // 裝飾模式
-                    var propertyObject = propertyInfo.GetValue(request);
+                    var temp = propertyInfo.GetValue(request);
                     RestructureAttribute restructureAttribute = propertyInfo.GetCustomAttribute<RestructureAttribute>();
                     if (restructureAttribute != null)
                     {
-                        FormatQueryString(propertyObject, SearchType.Restructure);
+                        FormatQueryString(temp, SearchType.Restructure);
                         keyValuePairs.Where(keyValue => keyValue.Key.Contains("re-"));
-                        ReAssignKeyValue(propertyInfo.Name, restructureAttribute.Symbol.ToString());
+                        string name = !String.IsNullOrEmpty(restructureAttribute.RestructureName) ? propertyInfo.Name : propertyInfo.DeclaringType.Name;
+
+                        ReAssignKeyValue(name, restructureAttribute.Symbol.ToString(), restructureAttribute.ShowFieldName);
                     }
 
                     // atleast 情況
                     AtleastAttribute atleastAttribute = propertyInfo.GetCustomAttribute<AtleastAttribute>();
                     if (atleastAttribute != null)
                     {
-                        FormatQueryString(propertyObject, SearchType.Atleast);
+                        FormatQueryString(temp, SearchType.Atleast);
                         int atleastCount = keyValuePairs.Where(keyValue => keyValue.Key.Contains("atleast-")).Count();
                         RollbackKeyValue();
                         if (atleastCount < atleastAttribute.constructureNum)
@@ -122,35 +145,40 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
                         value = propertyInfo.GetValue(request).ToString();
                     }
 
-
                     string encodeValue = System.Web.HttpUtility.UrlEncode(value);
 
                     switch (searchType)
                     {
                         case SearchType.Restructure:
-                            key = $"re-{key}";
+                            key = $"re_{propertyInfo.DeclaringType.Name.ToLower()}-{key}";
                             break;
                         case SearchType.Atleast:
                             key = $"atleast-{key}";
                             break;
                     }
-                    keyValuePairs.Add(key, encodeValue);
+                    keyValuePairs.Add(key, encodeValue); //re-width,300 re-height,400
                 }
 
             }
         }
 
 
-        public void ReAssignKeyValue(string keyInput, string symbol)
+        public void ReAssignKeyValue(string keyInput, string symbol, bool retainFieldName = false)
         {
-            List<KeyValuePair<string, string>> removeableList = keyValuePairs.Where(keyValue => keyValue.Key.Contains("re-")).ToList();
+            List<KeyValuePair<string, string>> removeableList = keyValuePairs.Where(keyValue => keyValue.Key.Contains($"re_{keyInput}-")).ToList();
             List<string> valueList = new List<string>();
-            string encodeSymbol = HttpUtility.UrlEncode(symbol);
+            string encodeSymbol = System.Web.HttpUtility.UrlEncode(symbol);
 
             foreach (var keyValuePair in removeableList)
             {
                 keyValuePairs.Remove(keyValuePair.Key);
-                valueList.Add(keyValuePair.Value);
+                string prefix = "";
+                if (retainFieldName)
+                {
+                    string key = keyValuePair.Key.Replace($"re_{keyInput}-", "");
+                    prefix = !string.IsNullOrEmpty(key) ? $"{key}:" : key;
+                }
+                valueList.Add(prefix + keyValuePair.Value);
             }
 
             string qsValue = string.Join(encodeSymbol, valueList);

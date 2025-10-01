@@ -1,4 +1,5 @@
 ﻿using GoogleMap.SDK.API.Services.Place;
+using GoogleMap.SDK.API.Services.StaticMap;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
@@ -7,6 +8,7 @@ using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.NearbySearch;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlaceDetail;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlacePhoto;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.StaticMap;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Service;
 using IOCServiceCollection;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ServiceCollection = IOCServiceCollection.ServiceCollection;
 
 namespace GoogleMap.SDK.API
@@ -87,6 +90,31 @@ namespace GoogleMap.SDK.API
             //RoutesRequest routesRequest = new RoutesRequest("台北火車站", "西門町", TravelMode.DRIVE, AddressType.Address);
             //RoutesResModel routesResModel = await googleAPIContext.Route.GetRoutes(routesRequest);
             //var temp = routesResModel.routes[0].polyline.encodedPolyline;
+            #endregion
+
+            #region StaticMap
+
+            //Markers[] markers = {
+            //    new Markers()
+            //    {
+            //        color = "blue",
+            //        label = "S",
+            //        location =  new double[]{ 25.0347626,121.5634066 }
+            //    }
+            //};
+            //StaticMapRequest staticMapRequest = new StaticMapRequest("TaiPei", 14, 400, 400, markers);
+
+            //Byte[] photoBytes = await googleAPIContext.StaticMap.GetStaticMap(staticMapRequest);
+
+            //Form form = new Form();
+            //PictureBox pictureBox = new PictureBox();
+            //pictureBox.Width = 400;
+            //pictureBox.Height = 400;
+            //pictureBox.Image = new Bitmap(new MemoryStream(photoBytes));
+            //form.Controls.Add(pictureBox);
+            //form.ShowDialog();
+
+
             #endregion
 
 
