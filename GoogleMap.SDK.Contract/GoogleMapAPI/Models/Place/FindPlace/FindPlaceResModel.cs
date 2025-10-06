@@ -18,6 +18,8 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.FindPlace
             public string name { get; set; }
             public Opening_Hours opening_hours { get; set; }
             public float rating { get; set; }
+
+            public string place_id { get; set; }
         }
 
         public class Geometry

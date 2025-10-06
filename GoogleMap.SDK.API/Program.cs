@@ -2,6 +2,7 @@
 using GoogleMap.SDK.API.Services.StaticMap;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Direction;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Geocoding;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.FindPlace;
@@ -46,9 +47,9 @@ namespace GoogleMap.SDK.API
             #region FindPlace
             //FindPlaceInputFields[] fields = { FindPlaceInputFields.name, FindPlaceInputFields.geometry, FindPlaceInputFields.type };
             //FindPlaceRequest findPlaceRequest = new FindPlaceRequest(fields);
-            //findPlaceRequest.input = "永和豆漿大王";
-            //FindPlaceResModel findPlaceResModel = await googleAPIContext.Place.NearbySearch(findPlaceRequest);
-            //Console.WriteLine(findPlaceResModel.candidates[0].name);
+            //findPlaceRequest.input = "台北101";
+            //FindPlaceResModel findPlaceResModel = await googleAPIContext.Place.FindPlace(findPlaceRequest);
+            //Console.WriteLine(findPlaceResModel.candidates[0].place_id);
             #endregion
 
             #region NearbySearch
@@ -119,17 +120,35 @@ namespace GoogleMap.SDK.API
             #endregion
 
             #region Geocoding
+            //GeocodingRequest geocodingRequest = new GeocodingRequest();
+            //geocodingRequest.Address = "台北101";
 
-            GeocodingRequest geocodingRequest = new GeocodingRequest();
-            geocodingRequest.Address = "台北101";
+            //GeocodingResModel geocodingResModel = await googleAPIContext.Geocoding.GeocodingSearch(geocodingRequest);
+            //Console.WriteLine(geocodingResModel.results[0].formatted_address);
 
-            GeocodingResModel geocodingResModel = await googleAPIContext.Geocoding.GeocodingSearch(geocodingRequest);
-            Console.WriteLine(geocodingResModel.results[0].formatted_address);
-
-
-            Console.ReadKey();
+            //Console.ReadKey();
             #endregion;
 
+            #region Directions
+            //DirectionRequest directionRequest = new DirectionRequest();
+            //directionRequest.destination = "Taipei";
+            //directionRequest.origin = "Taichung";
+
+            //AvoidType[] avoidTypes = { AvoidType.tolls, AvoidType.ferries };
+            //directionRequest.avoid = avoidTypes;
+            //directionRequest.mode = Mode.driving;
+            //directionRequest.alternatives = true;
+
+            //string[] waypoints = { "桃園", "新竹" };
+            //directionRequest.waypoints = waypoints;
+
+            //DirectionResModel directionResModel = await googleAPIContext.Direction.GetDirections(directionRequest);
+            //Console.WriteLine(directionResModel.geocoded_waypoints[0].place_id);
+            //Console.WriteLine(directionResModel.routes[0].summary);
+
+            //Location[] locationArray = directionResModel.routes[0].overview_polyline.points;
+
+            #endregion
 
             Console.ReadLine();
 

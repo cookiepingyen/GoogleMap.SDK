@@ -28,6 +28,13 @@ namespace GoogleMap.SDK.API.Services
             return response;
         }
 
+        public async Task<T> GetAsync<T>(BaseRequest request, JsonSerializerSettings settings)
+        {
+            string url = request.ToUri(apiKey);
+            var response = await _httpRequest.GetAsync<T>(url, settings: settings);
+            return response;
+        }
+
 
         public async Task<byte[]> GetByteArrayAsync(BaseRequest request)
         {

@@ -70,6 +70,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=9.0.0.9, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.9\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -118,6 +121,10 @@
     <Compile Include="GoogleMapAPI\Attributes\SeparatorAttribute.cs" />
     <Compile Include="GoogleMapAPI\IGoogleAPIContext.cs" />
     <Compile Include="GoogleMapAPI\Models\BaseRequest.cs" />
+    <Compile Include="GoogleMapAPI\Models\Direction\DirectionConvert.cs" />
+    <Compile Include="GoogleMapAPI\Models\Direction\DirectionRequest.cs" />
+    <Compile Include="GoogleMapAPI\Models\Direction\DirectionResModel.cs" />
+    <Compile Include="GoogleMapAPI\Models\Direction\GooglePoints.cs" />
     <Compile Include="GoogleMapAPI\Models\Enums\AddressType.cs" />
     <Compile Include="GoogleMapAPI\Models\Enums\AvoidType.cs" />
     <Compile Include="GoogleMapAPI\Models\Enums\FindPlaceInputFields.cs" />
@@ -160,8 +167,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GoogleMapAPI\Models\Direction\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
