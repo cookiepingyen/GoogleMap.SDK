@@ -3,6 +3,7 @@ using GoogleMap.SDK.API.Services.StaticMap;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Geocoding;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.FindPlace;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.NearbySearch;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlaceDetail;
@@ -116,6 +117,18 @@ namespace GoogleMap.SDK.API
 
 
             #endregion
+
+            #region Geocoding
+
+            GeocodingRequest geocodingRequest = new GeocodingRequest();
+            geocodingRequest.Address = "台北101";
+
+            GeocodingResModel geocodingResModel = await googleAPIContext.Geocoding.GeocodingSearch(geocodingRequest);
+            Console.WriteLine(geocodingResModel.results[0].formatted_address);
+
+
+            Console.ReadKey();
+            #endregion;
 
 
             Console.ReadLine();

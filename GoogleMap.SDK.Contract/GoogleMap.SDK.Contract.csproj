@@ -126,6 +126,8 @@
     <Compile Include="GoogleMapAPI\Models\Enums\PlaceDetailInputFields.cs" />
     <Compile Include="GoogleMapAPI\Models\Enums\SearchType.cs" />
     <Compile Include="GoogleMapAPI\Models\Enums\TravelMode.cs" />
+    <Compile Include="GoogleMapAPI\Models\Geocoding\GeocodingRequest.cs" />
+    <Compile Include="GoogleMapAPI\Models\Geocoding\GeocodingResModel.cs" />
     <Compile Include="GoogleMapAPI\Models\GoogleSigned.cs" />
     <Compile Include="GoogleMapAPI\Models\Location.cs" />
     <Compile Include="GoogleMapAPI\Models\PhotoSpec.cs" />
@@ -158,6 +160,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GoogleMapAPI\Models\Direction\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

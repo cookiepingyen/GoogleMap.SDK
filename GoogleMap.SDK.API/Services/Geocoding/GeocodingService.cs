@@ -1,4 +1,6 @@
-﻿using GoogleMap.SDK.Contract.GoogleMapAPI.Service;
+﻿using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Geocoding;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.FindPlace;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Service;
 using HttpUtility;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -13,6 +15,11 @@ namespace GoogleMap.SDK.API.Services.Geocoding
     {
         public GeocodingService(IHttpRequest request, IConfiguration configuration) : base(request, configuration)
         {
+        }
+
+        public Task<GeocodingResModel> GeocodingSearch(GeocodingRequest geocodingRequest, string urlInput = null)
+        {
+            return base.GetAsync<GeocodingResModel>(geocodingRequest);
         }
     }
 }
