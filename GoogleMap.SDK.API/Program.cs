@@ -1,29 +1,14 @@
-﻿using GoogleMap.SDK.API.Services.Place;
-using GoogleMap.SDK.API.Services.StaticMap;
-using GoogleMap.SDK.Contract.GoogleMapAPI;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Direction;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
+﻿using GoogleMap.SDK.Contract.GoogleMapAPI;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Geocoding;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.FindPlace;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.NearbySearch;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlaceDetail;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlacePhoto;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.StaticMap;
-using GoogleMap.SDK.Contract.GoogleMapAPI.Service;
-using IOCServiceCollection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static GoogleMap.SDK.Contract.Components.AutoComplete.AutoCompleteContract;
 using ServiceCollection = IOCServiceCollection.ServiceCollection;
 
 namespace GoogleMap.SDK.API

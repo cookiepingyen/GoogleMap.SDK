@@ -30,7 +30,7 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models.Place.PlaceDetail
             public Photo[] photos { get; set; }
             public string place_id { get; set; }
             public Plus_Code plus_code { get; set; }
-            public int rating { get; set; }
+            public double rating { get; set; }
             public string reference { get; set; }
             public Review[] reviews { get; set; }
             public string[] types { get; set; }

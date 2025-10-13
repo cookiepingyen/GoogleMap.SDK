@@ -114,6 +114,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\AutoComplete\AutoCompleteContract.cs" />
+    <Compile Include="Components\AutoComplete\ComboBoxData.cs" />
     <Compile Include="GoogleMapAPI\Attributes\AtleastAttribute.cs" />
     <Compile Include="GoogleMapAPI\Attributes\OptionalAttribute.cs" />
     <Compile Include="GoogleMapAPI\Attributes\RequireAttribute.cs" />

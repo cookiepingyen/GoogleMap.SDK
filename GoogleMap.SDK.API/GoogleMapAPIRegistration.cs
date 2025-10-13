@@ -28,8 +28,6 @@ namespace GoogleMap.SDK.API
             collection.AddTransient<IStaticMapService, StaticMapService>();
             collection.AddTransient<IDirectionService, DirectionService>();
 
-
-
         }
     }
 }
