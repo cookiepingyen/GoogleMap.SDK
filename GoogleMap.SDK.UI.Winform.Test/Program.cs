@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using static GoogleMap.SDK.Contract.Components.AutoComplete.AutoCompleteContract;
 using ServiceCollection = IOCServiceCollection.ServiceCollection;
 using GoogleMap.SDK.API;
+using GoogleMap.SDK.Core;
 namespace GoogleMap.SDK.UI.Winform.Test
 {
     internal static class Program
@@ -33,9 +34,8 @@ namespace GoogleMap.SDK.UI.Winform.Test
 
             collection.Add(new ServiceDescriptor(typeof(IConfiguration), configuration));
             collection.AddSingleton<Form, Form1>();
-            collection.AddGoogleMapAPIRegistration(configuration);
-            collection.AddTransient<IAutoCompletePresenter, PlaceAutoCompletePresenter>();
-            collection.AddTransient<IAutoCompleteView, PlaceAutoCompleteView>();
+            collection.AddGoogleMapCoreRegistration(configuration);
+            collection.AddGoogleMapWinformRegistration(configuration);
             provider = collection.BuildServiceProvider();
 
             Form form = provider.GetService<Form>();

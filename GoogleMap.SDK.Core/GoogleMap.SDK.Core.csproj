@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component\AutoComplete\PlaceAutoCompletePresenter.cs" />
+    <Compile Include="GoogleMapCoreRegistration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
