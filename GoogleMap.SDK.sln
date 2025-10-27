@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.UI.Winform", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.UI.Winform.Test", "GoogleMap.SDK.UI.Winform.Test\GoogleMap.SDK.UI.Winform.Test.csproj", "{DB0B2F17-9F4D-4C48-9649-8D92B159B913}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.UI.WPF", "GoogleMap.SDK.UI.WPF\GoogleMap.SDK.UI.WPF.csproj", "{C5165F4E-6217-44F3-BAC6-C6D558939C56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMap.SDK.UI.WPF.Test", "GoogleMap.SDK.UI.WPF.Test\GoogleMap.SDK.UI.WPF.Test.csproj", "{AB69E63A-2C8F-4AEE-9F26-9B5B5DB9AD27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{DB0B2F17-9F4D-4C48-9649-8D92B159B913}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB0B2F17-9F4D-4C48-9649-8D92B159B913}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB0B2F17-9F4D-4C48-9649-8D92B159B913}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5165F4E-6217-44F3-BAC6-C6D558939C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5165F4E-6217-44F3-BAC6-C6D558939C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5165F4E-6217-44F3-BAC6-C6D558939C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5165F4E-6217-44F3-BAC6-C6D558939C56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB69E63A-2C8F-4AEE-9F26-9B5B5DB9AD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB69E63A-2C8F-4AEE-9F26-9B5B5DB9AD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB69E63A-2C8F-4AEE-9F26-9B5B5DB9AD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB69E63A-2C8F-4AEE-9F26-9B5B5DB9AD27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

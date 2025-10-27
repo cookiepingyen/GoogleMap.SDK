@@ -28,14 +28,10 @@ namespace GoogleMap.SDK.UI.Winform.Test
             Application.SetCompatibleTextRenderingDefault(false);
 
             var collection = new ServiceCollection();
-            var configuration = new ConfigurationBuilder()
-             .AddJsonFile("appsettings.json")
-             .Build();
 
-            collection.Add(new ServiceDescriptor(typeof(IConfiguration), configuration));
             collection.AddSingleton<Form, Form1>();
-            collection.AddGoogleMapCoreRegistration(configuration);
-            collection.AddGoogleMapWinformRegistration(configuration);
+            collection.AddGoogleMapCoreRegistration();
+            collection.AddGoogleMapWinformRegistration();
             provider = collection.BuildServiceProvider();
 
             Form form = provider.GetService<Form>();

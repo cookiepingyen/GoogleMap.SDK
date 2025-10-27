@@ -1,5 +1,4 @@
-﻿using GoogleMap.SDK.UI.Winform.Components.AutoComplete;
-using Microsoft.Extensions.Configuration;
+﻿using GoogleMap.SDK.UI.WPF.Components.AutoComplete;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using static GoogleMap.SDK.Contract.Components.AutoComplete.AutoCompleteContract;
 
-namespace GoogleMap.SDK.UI.Winform
+namespace GoogleMap.SDK.UI.WPF
 {
-    public static class GoogleMapWinformRegistration
+    public static class GoogleMapWPFRegistration
     {
-        public static void AddGoogleMapWinformRegistration(this IServiceCollection collection)
+        public static void AddGoogleMapWPFRegistration(this IServiceCollection collection)
         {
             collection.AddSingleton<IAutoCompleteView, PlaceAutoCompleteView>();
         }
-
-
     }
 }

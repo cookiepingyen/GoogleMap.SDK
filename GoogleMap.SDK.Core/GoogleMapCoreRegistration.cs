@@ -13,9 +13,13 @@ namespace GoogleMap.SDK.Core
 {
     public static class GoogleMapCoreRegistration
     {
-        public static void AddGoogleMapCoreRegistration(this IServiceCollection collection, IConfiguration configuration)
+        public static void AddGoogleMapCoreRegistration(this IServiceCollection collection)
         {
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            collection.Add(new ServiceDescriptor(typeof(IConfiguration), configuration));
             collection.AddGoogleMapAPIRegistration(configuration);
+
+
             collection.AddSingleton<IAutoCompletePresenter, PlaceAutoCompletePresenter>();
         }
 
