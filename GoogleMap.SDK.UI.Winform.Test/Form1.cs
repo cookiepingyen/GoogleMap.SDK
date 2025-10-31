@@ -26,8 +26,7 @@ namespace GoogleMap.SDK.UI.Winform.Test
             PlaceAutoCompleteView placeAutoCompleteView = (PlaceAutoCompleteView)this.autoCompleteView;
 
             placeAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
-            flowLayoutPanel1.Controls.Add(placeAutoCompleteView);
-
+            panel1.Controls.Add(placeAutoCompleteView);
         }
 
         private void PlaceAutoCompleteView_selectChange(object sender, PlaceDetailResModel e)

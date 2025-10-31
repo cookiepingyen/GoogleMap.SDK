@@ -12,8 +12,6 @@ namespace GoogleMap.SDK.Contract.Components.AutoComplete
         {
             object DataSource { get; set; }
 
-            void this_KeyDown(object sender, ConsoleKey e);
-
             void this_inputChange(object sender, EventArgs e);
 
             void AutoCompleteTextBox_ParentChanged(object sender, EventArgs e);

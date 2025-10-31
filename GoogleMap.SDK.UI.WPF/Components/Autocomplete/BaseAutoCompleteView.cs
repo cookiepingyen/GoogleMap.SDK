@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static GoogleMap.SDK.Contract.Components.AutoComplete.AutoCompleteContract;
 using GoogleMap.SDK.UI.WPF.Utility;
+using System.Diagnostics;
 
 namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
 {
@@ -59,24 +60,18 @@ namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
             };
 
             _listBox.MouseDoubleClick += ListBox_DoubleClick;
-            KeyDown += AutoComplete_KeyDown;
+            PreviewKeyDown += AutoComplete_KeyDown;
             TextChanged += this_inputChange;
-
         }
 
         private void AutoComplete_KeyDown(object sender, KeyEventArgs e)
         {
-            this_KeyDown(sender, (ConsoleKey)e.Key);
+            this_KeyDown(sender, e.Key);
         }
 
         public void AutoCompleteTextBox_ParentChanged(object sender, EventArgs e)
         {
-            //Parent.Controls.Add(_listBox);
-            //_listBox.Left = Left;
-            //_listBox.Top = Top + Height;
-            //_listBox.Width = Width;
-            //_popup.Visibility = System.Windows.Visibility.Hidden;
-            //_listBox.BringToFront();
+
         }
 
 
@@ -115,10 +110,8 @@ namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
             GetDetail(_listBox.SelectedValue?.ToString() ?? "");
         }
 
-        public void this_KeyDown(object sender, ConsoleKey e)
+        public void this_KeyDown(object sender, Key wpfKey)
         {
-            Key wpfKey = ConvertConsoleKeyToKey(e);
-
             switch (wpfKey)
             {
                 case Key.Tab:
@@ -181,19 +174,5 @@ namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
                 default: return Key.None;
             }
         }
-
-
-
-        //protected override bool IsInputKey(Keys keyData)
-        //{
-        //    switch (keyData)
-        //    {
-        //        case Keys.Tab:
-        //            return true;
-        //        default:
-        //            return base.IsInputKey((Keys)keyData);
-        //    }
-        //}
-
     }
 }
