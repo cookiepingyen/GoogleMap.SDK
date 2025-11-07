@@ -4,6 +4,7 @@ using GoogleMap.SDK.Contract.GoogleMapAPI.Models.StaticMap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,8 +14,13 @@ using ServiceCollection = IOCServiceCollection.ServiceCollection;
 
 namespace GoogleMap.SDK.API
 {
+
     internal class Program
     {
+        class Student
+        {
+            public string[] Name { get; set; }
+        }
         public static IServiceProvider provider = null;
         static async Task Main(string[] args)
         {

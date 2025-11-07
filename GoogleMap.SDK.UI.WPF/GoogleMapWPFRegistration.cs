@@ -13,7 +13,7 @@ namespace GoogleMap.SDK.UI.WPF
     {
         public static void AddGoogleMapWPFRegistration(this IServiceCollection collection)
         {
-            collection.AddSingleton<IAutoCompleteView, PlaceAutoCompleteView>();
+            collection.AddTransient<IAutoCompleteView, PlaceAutoCompleteView>();
         }
     }
 }

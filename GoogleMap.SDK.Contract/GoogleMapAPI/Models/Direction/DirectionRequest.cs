@@ -33,6 +33,19 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models.Direction
         {
 
         }
+        public DirectionRequest(string destination, string origin, bool isPlaceID = false)
+        {
+            if (isPlaceID)
+            {
+                this.destination = $"place_id:{destination}";
+                this.origin = $"place_id:{origin}";
+            }
+            else
+            {
+                this.destination = destination;
+                this.origin = origin;
+            }
+        }
 
         public DirectionRequest(string destination, string origin)
         {

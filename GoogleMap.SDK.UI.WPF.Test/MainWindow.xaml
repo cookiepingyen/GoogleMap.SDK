@@ -15,7 +15,7 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="autoCompletePanel" Grid.Row="0" Grid.Column="0"></StackPanel>
+        <StackPanel x:Name="autoCompletePanel" Grid.Row="0" Grid.Column="0" Orientation="Vertical"></StackPanel>
         <WindowsPresentation:GMapControl Name="mapControl" Grid.Row="0" Grid.Column="1" />
     </Grid>
 </Window>

@@ -19,6 +19,7 @@ namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
         private ListBox _listBox = new ListBox();
         private object _values;
         public event EventHandler<TItem> selectChange;
+        public string SelectValue => _listBox.SelectedValue.ToString();
         private String _formerValue = String.Empty;
         private Popup _popup;
         public abstract Task<TItem> ItemDetailResponse(string selectItem);

@@ -4,25 +4,74 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoogleMap.SDK.UI.WPF.Test"
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="450">
-    <StackPanel Background="White" Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <Label>名稱</Label>
-            <Label Content="{Binding PlaceName}"></Label>
+             mc:Ignorable="d">
+
+    <Border Background="White" 
+            CornerRadius="8" 
+            BorderBrush="#DDD"
+            BorderThickness="1"
+            Padding="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="6" ShadowDepth="1" 
+                            Opacity="0.15" Color="#000000"/>
+        </Border.Effect>
+
+        <StackPanel MaxWidth="300">
+            <!-- 店名 -->
+            <TextBlock Text="{Binding PlaceName}" 
+                      FontWeight="Bold"
+                      FontSize="16"
+                      Foreground="#222"
+                      TextWrapping="Wrap"/>
+
+            <!-- 評分與評論數 -->
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="4.3" 
+                          Foreground="Black" 
+                          FontSize="14"/>
+                <TextBlock Text=" ★★★★☆" 
+                          Foreground="Orange" 
+                          FontSize="14" 
+                          Margin="4,0,0,0"/>
+                <TextBlock Text=" (39,282)" 
+                          Foreground="Gray" 
+                          FontSize="14" 
+                          Margin="4,0,0,0"/>
+            </StackPanel>
+
+            <!-- 類別 -->
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="夜市" 
+                          Foreground="Gray" 
+                          FontSize="13"/>
+                <TextBlock Text=" · 營業中" 
+                          Foreground="#188038" 
+                          FontSize="13" 
+                          FontWeight="Bold"
+                          Margin="4,0,0,0"/>
+            </StackPanel>
+
+            <!-- 地址 -->
+            <TextBlock Text="{Binding Address}" 
+                      Foreground="Black" 
+                      FontSize="13" 
+                      Margin="0,2,0,0"
+                      TextWrapping="Wrap"/>
+
+            <!-- 電話 -->
+            <TextBlock Text="{Binding Phone}" 
+                      Foreground="#1A73E8" 
+                      FontSize="13" 
+                      Margin="0,2,0,0"
+                      TextDecorations="Underline"
+                      Cursor="Hand"/>
+
+            <!-- 營業時間 -->
+            <TextBlock Text="結束營業時間：00:00" 
+                      Foreground="#188038" 
+                      FontSize="13" 
+                      FontWeight="Bold" 
+                      Margin="0,6,0,0"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label>地址</Label>
-            <Label Content="{Binding Address}"></Label>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label>電話</Label>
-            <Label Content="{Binding Phnoe}"></Label>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label>簡介:</Label>
-            <Label>位於陸橋下的新奇雕塑品和恐龍主題街頭藝術，一旁有河濱自行車專用道。
-            </Label>
-        </StackPanel>
-    </StackPanel>
+    </Border>
 </UserControl>

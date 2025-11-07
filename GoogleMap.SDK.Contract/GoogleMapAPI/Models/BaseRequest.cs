@@ -65,7 +65,10 @@ namespace GoogleMap.SDK.Contract.GoogleMapAPI.Models
                 if (propertyInfo.PropertyType.IsArray)
                 {
                     List<object> items = new List<object>();
-                    foreach (var arrayItem in (IEnumerable)propertyInfo.GetValue(request))
+                    var enumerable = (IEnumerable)propertyInfo.GetValue(request);
+                    if (enumerable == null)
+                        return;
+                    foreach (var arrayItem in enumerable)
                     {
                         items.Add(arrayItem);
                     }

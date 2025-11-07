@@ -22,6 +22,11 @@ using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Direction;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
 using Location = GoogleMap.SDK.Contract.GoogleMapAPI.Models.Location;
 using static GMap.NET.Entity.OpenStreetMapGraphHopperGeocodeEntity;
+using Microsoft.Extensions.DependencyInjection;
+using IOCServiceCollection;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes;
+using GoogleMap.SDK.Contract.GoogleMapAPI;
 
 namespace GoogleMap.SDK.UI.WPF.Test
 {
@@ -30,17 +35,37 @@ namespace GoogleMap.SDK.UI.WPF.Test
     /// </summary>
     public partial class MainWindow : Window
     {
-        IAutoCompleteView autoCompleteView;
         public event EventHandler<MouseButtonEventArgs> onMarkerClick;
+        PlaceAutoCompleteView originAutoCompleteView;
+        PlaceAutoCompleteView destAutoCompleteView;
+        IGoogleAPIContext googleAPIContext;
 
-        public MainWindow(IAutoCompleteView autoCompleteView)
+        public MainWindow(ServiceProvider provider)
         {
             InitializeComponent();
-            this.autoCompleteView = autoCompleteView;
-            PlaceAutoCompleteView placeAutoCompleteView = (PlaceAutoCompleteView)this.autoCompleteView;
 
-            autoCompletePanel.Children.Add(placeAutoCompleteView);
-            placeAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
+            // 加上兩個 autocomplete
+            originAutoCompleteView = (PlaceAutoCompleteView)provider.GetService<IAutoCompleteView>();
+            destAutoCompleteView = (PlaceAutoCompleteView)provider.GetService<IAutoCompleteView>();
+            destAutoCompleteView.Margin = new Thickness(0, 50, 0, 0);
+
+            autoCompletePanel.Children.Add(originAutoCompleteView);
+            autoCompletePanel.Children.Add(destAutoCompleteView);
+
+            originAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
+            destAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
+
+            googleAPIContext = provider.GetService<IGoogleAPIContext>();
+
+
+            // 加上路線按鈕
+            Button placeBtn = new Button();
+            placeBtn.Content = "規劃路線";
+            placeBtn.Margin = new Thickness(0, 50, 0, 0);
+            placeBtn.Click += PlaceBtn_Click;
+
+            autoCompletePanel.Children.Add(placeBtn);
+
 
 
             mapControl.MapProvider = GMapProviders.GoogleMap; //google china 地图
@@ -53,9 +78,10 @@ namespace GoogleMap.SDK.UI.WPF.Test
 
             mapControl.MouseLeftButtonDown += new MouseButtonEventHandler(mapControl_MouseLeftButtonDown);
 
-
             GoogleMapRouteGenerate();
         }
+
+
 
         private void PlaceAutoCompleteView_selectChange(object sender, PlaceDetailResModel e)
         {
@@ -151,6 +177,35 @@ namespace GoogleMap.SDK.UI.WPF.Test
             mapControl.Markers.Add(route);
 
             Console.WriteLine(list);
+        }
+
+        private async void PlaceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string origin = originAutoCompleteView.SelectValue;
+            string destination = destAutoCompleteView.SelectValue;
+
+            DirectionRequest directionRequest = new DirectionRequest(destination, origin, true);
+
+            AvoidType[] avoidTypes = { AvoidType.tolls, AvoidType.ferries };
+            directionRequest.avoid = avoidTypes;
+            directionRequest.mode = Mode.driving;
+            directionRequest.alternatives = true;
+
+            DirectionResModel directionResModel = await googleAPIContext.Direction.GetDirections(directionRequest);
+            Console.WriteLine(directionResModel.geocoded_waypoints[0].place_id);
+            Console.WriteLine(directionResModel.routes[0].summary);
+
+            Location[] locationArray = directionResModel.routes[0].overview_polyline.points;
+
+
+            var points = locationArray.Select((x) => new PointLatLng()
+            {
+                Lat = x.Latitude,
+                Lng = x.Longitude,
+            }).ToList();
+
+            GMapRoute route = new GMapRoute(points);
+            mapControl.Markers.Add(route);
         }
     }
 }
