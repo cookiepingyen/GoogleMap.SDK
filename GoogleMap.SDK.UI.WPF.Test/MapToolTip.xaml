@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="GoogleMap.SDK.UI.WPF.Test.MapToolTip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GoogleMap.SDK.UI.WPF.Test"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="450">
+    <StackPanel Background="White" Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Label>名稱</Label>
+            <Label Content="{Binding PlaceName}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label>地址</Label>
+            <Label Content="{Binding Address}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label>電話</Label>
+            <Label Content="{Binding Phnoe}"></Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label>簡介:</Label>
+            <Label>位於陸橋下的新奇雕塑品和恐龍主題街頭藝術，一旁有河濱自行車專用道。
+            </Label>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

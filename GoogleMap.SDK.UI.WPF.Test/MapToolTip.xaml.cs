@@ -13,18 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace GoogleMap.SDK.UI.WPF
+namespace GoogleMap.SDK.UI.WPF.Test
 {
     /// <summary>
-    /// MainWindow.xaml 的互動邏輯
+    /// MapToolTip.xaml 的互動邏輯
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MapToolTip : UserControl
     {
-        public MainWindow()
+
+        public MapToolTip()
         {
             InitializeComponent();
-
         }
     }
 }
