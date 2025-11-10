@@ -18,7 +18,7 @@ namespace GoogleMap.SDK.UI.WPF.Test
     /// <summary>
     /// MapToolTip.xaml 的互動邏輯
     /// </summary>
-    public partial class MapToolTip : UserControl
+    public partial class MapToolTip : ToolTip
     {
 
         public MapToolTip()

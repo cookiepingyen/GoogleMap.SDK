@@ -94,12 +94,14 @@ namespace GoogleMap.SDK.UI.WPF.Test
                 Phone = e.result.formatted_phone_number,
                 Address = e.result.formatted_address
             };
+
             Image dynamicImage = new Image();
-            dynamicImage.Width = 32;  // 可自訂大小
+            dynamicImage.Width = 32;
             dynamicImage.Height = 32;
             dynamicImage.MouseLeftButtonDown += Marker_MouseLeftButtonDown;
             dynamicImage.MouseRightButtonDown += Marker_MouseRightButtonDown;
-            dynamicImage.ToolTip = toolTip;
+            dynamicImage.ToolTip = toolTip;  // 直接設定，不需要再包一層！
+
             // 設定圖片來源
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
