@@ -52,5 +52,21 @@ namespace GoogleMap.SDK.Core.Component.AutoComplete
 
             return placeDetailResModel;
         }
+
+
+        public async Task<object> GetItemDetail(string selectedItem, bool with_all_field)
+        {
+            PlaceDetailRequest placeDetailRequest = new PlaceDetailRequest();
+            placeDetailRequest.placeId = selectedItem;
+
+            if (!with_all_field)
+            {
+                placeDetailRequest.fields = new PlaceDetailInputFields[] { PlaceDetailInputFields.name, PlaceDetailInputFields.formatted_address, PlaceDetailInputFields.type };
+            }
+
+            PlaceDetailResModel placeDetailResModel = await googleAPIContext.Place.PlaceDetail(placeDetailRequest);
+
+            return placeDetailResModel;
+        }
     }
 }

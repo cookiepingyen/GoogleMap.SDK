@@ -25,7 +25,7 @@ namespace GoogleMap.SDK.Contract.Components.AutoComplete
         {
             Task<List<object>> GetDataSource(string text);
 
-            Task<object> GetItemDetail(string selectedItem);
+            Task<object> GetItemDetail(string selectedItem, bool with_all_field);
         }
     }
 }

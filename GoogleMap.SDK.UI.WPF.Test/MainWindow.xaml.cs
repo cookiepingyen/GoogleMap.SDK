@@ -27,6 +27,7 @@ using IOCServiceCollection;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
+using static GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes.RoutesResModel;
 
 namespace GoogleMap.SDK.UI.WPF.Test
 {
@@ -92,7 +93,9 @@ namespace GoogleMap.SDK.UI.WPF.Test
             {
                 PlaceName = e.result.name,
                 Phone = e.result.formatted_phone_number,
-                Address = e.result.formatted_address
+                Address = e.result.formatted_address,
+                Rating = e.result.rating,
+                UserRatingsTotal = e.result.user_ratings_total
             };
 
             Image dynamicImage = new Image();

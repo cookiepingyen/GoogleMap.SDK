@@ -11,5 +11,9 @@ namespace GoogleMap.SDK.UI.WPF.Test
         public String PlaceName { get; set; }
         public String Address { get; set; }
         public String Phone { get; set; }
+
+        public double Rating { get; set; }
+
+        public int UserRatingsTotal { get; set; }
     }
 }

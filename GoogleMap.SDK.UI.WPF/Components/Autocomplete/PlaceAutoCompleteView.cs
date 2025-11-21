@@ -25,7 +25,7 @@ namespace GoogleMap.SDK.UI.WPF.Components.AutoComplete
 
         public override async Task<PlaceDetailResModel> ItemDetailResponse(string selectItem)
         {
-            object itemDetail = await autoCompletePresenter.GetItemDetail(selectItem);
+            object itemDetail = await autoCompletePresenter.GetItemDetail(selectItem, true);
             return (PlaceDetailResModel)itemDetail;
         }
     }
