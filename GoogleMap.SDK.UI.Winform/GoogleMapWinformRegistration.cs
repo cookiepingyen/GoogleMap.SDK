@@ -1,4 +1,7 @@
-﻿using GoogleMap.SDK.UI.Winform.Components.AutoComplete;
+﻿using GoogleMap.SDK.Contract.GoogleMap;
+using GoogleMap.SDK.Core.Service;
+using GoogleMap.SDK.UI.Winform.Components.AutoComplete;
+using GoogleMap.SDK.UI.Winform.Components.GoogleMap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +17,11 @@ namespace GoogleMap.SDK.UI.Winform
     {
         public static void AddGoogleMapWinformRegistration(this IServiceCollection collection)
         {
-            collection.AddSingleton<IAutoCompleteView, PlaceAutoCompleteView>();
+            collection.AddTransient<IAutoCompleteView, PlaceAutoCompleteView>();
+            collection.AddTransient<IOverlay, MapOverlay>();
+            collection.AddTransient<IOverlayService, OverlayService>();
+            collection.AddTransient<IMapControl, GoogleMapControl>();
+
         }
 
 

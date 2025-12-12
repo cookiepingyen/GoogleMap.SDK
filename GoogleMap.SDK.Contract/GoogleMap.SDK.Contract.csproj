@@ -6,6 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FA4AED75-020D-4385-BD1C-8321BD49E4DC}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <LangVersion>latest</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GoogleMap.SDK.Contract</RootNamespace>
     <AssemblyName>GoogleMap.SDK.Contract</AssemblyName>
@@ -163,6 +164,10 @@
     <Compile Include="GoogleMapAPI\Service\IPlaceService.cs" />
     <Compile Include="GoogleMapAPI\Service\IRouteService.cs" />
     <Compile Include="GoogleMapAPI\Service\IStaticMapService.cs" />
+    <Compile Include="GoogleMap\GoogleMapMarker.cs" />
+    <Compile Include="GoogleMap\IMapControl.cs" />
+    <Compile Include="GoogleMap\IOverlay.cs" />
+    <Compile Include="GoogleMap\IOverlayService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

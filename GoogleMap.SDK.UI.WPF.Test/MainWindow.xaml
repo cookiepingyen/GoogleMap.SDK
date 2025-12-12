@@ -7,7 +7,7 @@
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="container">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -16,6 +16,6 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="autoCompletePanel" Grid.Row="0" Grid.Column="0" Orientation="Vertical"></StackPanel>
-        <WindowsPresentation:GMapControl Name="mapControl" Grid.Row="0" Grid.Column="1" />
+
     </Grid>
 </Window>

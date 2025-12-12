@@ -4,12 +4,16 @@
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
          xmlns:local="clr-namespace:GoogleMap.SDK.UI.WPF.Test"
+         xmlns:converters="clr-namespace:GoogleMap.SDK.UI.WPF.Test.Converters"
          mc:Ignorable="d"
          Background="Transparent"
          BorderBrush="Transparent"
          BorderThickness="0"
          Padding="0"
          HasDropShadow="False">
+    <ToolTip.Resources>
+        <converters:RatingToStarsConverter x:Key="RantingConverter"/>
+    </ToolTip.Resources>
 
     <Border Background="White" 
             CornerRadius="8" 
@@ -34,11 +38,12 @@
                 <TextBlock Text="{Binding Rating}" 
                           Foreground="Black" 
                           FontSize="14"/>
-                <TextBlock Text=" ★★★★☆" 
-                          Foreground="Orange" 
-                          FontSize="14" 
-                          Margin="4,0,0,0"/>
-                <TextBlock Text=" (39,282)" 
+                <TextBlock Text="{Binding Rating, Converter={StaticResource RantingConverter}}"
+                            Foreground="Orange" 
+                            FontSize="14" 
+                            Margin="4,0,0,0"/>
+
+                <TextBlock Text="{Binding UserRatingsTotal}" 
                           Foreground="Gray" 
                           FontSize="14" 
                           Margin="4,0,0,0"/>
@@ -46,14 +51,22 @@
 
             <!-- 類別 -->
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                <TextBlock Text="夜市" 
-                          Foreground="Gray" 
-                          FontSize="13"/>
-                <TextBlock Text=" · 營業中" 
-                          Foreground="#188038" 
+                <TextBlock Text="{Binding BusinessStatus}" 
                           FontSize="13" 
                           FontWeight="Bold"
-                          Margin="4,0,0,0"/>
+                          Margin="4,0,0,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Red"/>
+                            <!-- 預設為紅色，如果是「營業中」則改為綠色 -->
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BusinessStatus}" Value="營業中">
+                                    <Setter Property="Foreground" Value="#188038"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </StackPanel>
 
             <!-- 地址 -->
@@ -70,13 +83,6 @@
                       Margin="0,2,0,0"
                       TextDecorations="Underline"
                       Cursor="Hand"/>
-
-            <!-- 營業時間 -->
-            <TextBlock Text="結束營業時間：00:00" 
-                      Foreground="#188038" 
-                      FontSize="13" 
-                      FontWeight="Bold" 
-                      Margin="0,6,0,0"/>
         </StackPanel>
     </Border>
 </ToolTip>

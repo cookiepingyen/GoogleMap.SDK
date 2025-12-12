@@ -1,0 +1,65 @@
+﻿using GMap.NET;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+using GoogleMap.SDK.Contract.GoogleMap;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
+using GoogleMap.SDK.Contract.GoogleMapAPI.Models.StaticMap;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
+{
+    public class MapOverlay : GMapOverlay, IOverlay
+    {
+        private string _name;
+        public string Name { get => _name; set => _name = value; }
+
+        public void AddMarker(Location location)
+        {
+            PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
+            GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
+            marker.Tag = this;
+            Markers.Add(marker);
+        }
+
+        public void AddMarkers(List<Location> locations)
+        {
+            foreach (Location location in locations)
+            {
+                PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
+                GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
+                Markers.Add(marker);
+            }
+        }
+
+        public void AddRoutes(List<Location> routes)
+        {
+            List<PointLatLng> pointLatLngs = routes.Select(
+                location => new PointLatLng(location.Latitude, location.Longitude)
+                ).ToList();
+
+            GMapRoute route = new GMapRoute(pointLatLngs, this.Name);
+            Routes.Add(route);
+        }
+
+        public void RemoveMarker(Location location)
+        {
+            GMapMarker marker = Markers.FirstOrDefault(x => x.Position.ToString() == location.ToString());
+            Markers.Remove(marker);
+        }
+
+        public void RemoveMarkers(List<Location> locations)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveRoutes(string name)
+        {
+            var route = Routes.First(x => x.Name == this.Name);
+            Routes.Remove(route);
+        }
+    }
+}

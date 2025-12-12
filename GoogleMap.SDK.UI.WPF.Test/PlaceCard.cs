@@ -13,7 +13,7 @@ namespace GoogleMap.SDK.UI.WPF.Test
         public String Phone { get; set; }
 
         public double Rating { get; set; }
-
-        public int UserRatingsTotal { get; set; }
+        public string UserRatingsTotal { get; set; }
+        public string BusinessStatus { get; set; }
     }
 }

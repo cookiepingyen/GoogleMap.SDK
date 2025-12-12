@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\RatingToStarsConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -125,6 +126,7 @@
     <Compile Include="MapToolTip.xaml.cs">
       <DependentUpon>MapToolTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MyGMapRoute.cs" />
     <Compile Include="PlaceCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

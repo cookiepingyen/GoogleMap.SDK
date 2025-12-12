@@ -28,6 +28,8 @@ using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Enums;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes;
 using GoogleMap.SDK.Contract.GoogleMapAPI;
 using static GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes.RoutesResModel;
+using System.Diagnostics;
+using GoogleMap.SDK.Contract.GoogleMap;
 
 namespace GoogleMap.SDK.UI.WPF.Test
 {
@@ -36,50 +38,44 @@ namespace GoogleMap.SDK.UI.WPF.Test
     /// </summary>
     public partial class MainWindow : Window
     {
-        public event EventHandler<MouseButtonEventArgs> onMarkerClick;
         PlaceAutoCompleteView originAutoCompleteView;
         PlaceAutoCompleteView destAutoCompleteView;
+        IMapControl mapControl;
+        ServiceProvider serviceProvider;
         IGoogleAPIContext googleAPIContext;
 
-        public MainWindow(ServiceProvider provider)
+        public event EventHandler<MouseButtonEventArgs> onMarkerClick;
+
+
+        public MainWindow(ServiceProvider provider, IGoogleAPIContext googleAPIContext)
         {
+            this.serviceProvider = provider;
+            this.googleAPIContext = googleAPIContext;
             InitializeComponent();
 
             // 加上兩個 autocomplete
             originAutoCompleteView = (PlaceAutoCompleteView)provider.GetService<IAutoCompleteView>();
+            originAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
+            autoCompletePanel.Children.Add(originAutoCompleteView);
+
             destAutoCompleteView = (PlaceAutoCompleteView)provider.GetService<IAutoCompleteView>();
             destAutoCompleteView.Margin = new Thickness(0, 50, 0, 0);
-
-            autoCompletePanel.Children.Add(originAutoCompleteView);
+            destAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
             autoCompletePanel.Children.Add(destAutoCompleteView);
 
-            originAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
-            destAutoCompleteView.selectChange += PlaceAutoCompleteView_selectChange;
-
-            googleAPIContext = provider.GetService<IGoogleAPIContext>();
-
-
-            // 加上路線按鈕
+            // 加上 規劃路線按鈕
             Button placeBtn = new Button();
             placeBtn.Content = "規劃路線";
             placeBtn.Margin = new Thickness(0, 50, 0, 0);
             placeBtn.Click += PlaceBtn_Click;
-
             autoCompletePanel.Children.Add(placeBtn);
 
 
-
-            mapControl.MapProvider = GMapProviders.GoogleMap; //google china 地图
-            mapControl.MinZoom = 2;  //最小缩放
-            mapControl.MaxZoom = 25; //最大缩放
-            mapControl.Zoom = 15;     //当前缩放
-            mapControl.ShowCenter = false; //不显示中心十字点
-            mapControl.DragButton = MouseButton.Left; //左键拖拽地图
-            mapControl.Position = new PointLatLng(25.0090256, 121.5027398); //地图中心位置：南京
-
-            mapControl.MouseLeftButtonDown += new MouseButtonEventHandler(mapControl_MouseLeftButtonDown);
-
-            GoogleMapRouteGenerate();
+            mapControl = serviceProvider.GetService<IMapControl>();
+            Control control = (Control)mapControl;
+            container.Children.Add(control);
+            Grid.SetRow(control, 0);
+            Grid.SetColumn(control, 1);
         }
 
 
@@ -95,67 +91,21 @@ namespace GoogleMap.SDK.UI.WPF.Test
                 Phone = e.result.formatted_phone_number,
                 Address = e.result.formatted_address,
                 Rating = e.result.rating,
-                UserRatingsTotal = e.result.user_ratings_total
+                UserRatingsTotal = $"({e.result.user_ratings_total.ToString()})",
+                BusinessStatus = (e.result.current_opening_hours.open_now ? "營業中" : "已打烊")
             };
 
-            Image dynamicImage = new Image();
-            dynamicImage.Width = 32;
-            dynamicImage.Height = 32;
-            dynamicImage.MouseLeftButtonDown += Marker_MouseLeftButtonDown;
-            dynamicImage.MouseRightButtonDown += Marker_MouseRightButtonDown;
-            dynamicImage.ToolTip = toolTip;  // 直接設定，不需要再包一層！
-
-            // 設定圖片來源
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("https://github.com/judero01col/GMap.NET/blob/master/GMap.NET/GMap.NET.Core/Resources/marker.png?raw=true", UriKind.Absolute);
-            bitmap.EndInit();
-
-            dynamicImage.Source = bitmap;
-
-            GMapMarker marker = new GMapMarker(new PointLatLng(e.result.geometry.location.lat, e.result.geometry.location.lng))
-            {
-                Shape = dynamicImage
-            };
-
-            dynamicImage.Tag = marker;
-            mapControl.Markers.Add(marker);
+            var location = e.result.geometry.location;
+            mapControl.AddMarker("選擇的地點", new Location(location.lat, location.lng));
         }
 
-        void mapControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //Point clickPoint = e.GetPosition(mapControl);
-            //PointLatLng point = mapControl.FromLocalToLatLng((int)clickPoint.X - 16, (int)clickPoint.Y - 16);
-
-            //Image dynamicImage = new Image();
-            //dynamicImage.Width = 32;  // 可自訂大小
-            //dynamicImage.Height = 32;
-            //dynamicImage.MouseLeftButtonDown += Marker_MouseLeftButtonDown;
-            //dynamicImage.MouseRightButtonDown += Marker_MouseRightButtonDown;
-            //dynamicImage.ToolTip = new MapToolTip();
-            //// 設定圖片來源
-            //BitmapImage bitmap = new BitmapImage();
-            //bitmap.BeginInit();
-            //bitmap.UriSource = new Uri("https://github.com/judero01col/GMap.NET/blob/master/GMap.NET/GMap.NET.Core/Resources/marker.png?raw=true", UriKind.Absolute);
-            //bitmap.EndInit();
-
-            //dynamicImage.Source = bitmap;
-
-            //GMapMarker marker = new GMapMarker(point)
-            //{
-            //    Shape = dynamicImage
-            //};
-
-            //dynamicImage.Tag = marker;
-            //mapControl.Markers.Add(marker);
-        }
 
         private void Marker_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Image image = (Image)sender;
-            GMapMarker marker = (GMapMarker)image.Tag;
+            //Image image = (Image)sender;
+            //GMapMarker marker = (GMapMarker)image.Tag;
 
-            mapControl.Markers.Remove(marker);
+            //mapControl.Markers.Remove(marker);
         }
 
         private void Marker_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -163,25 +113,6 @@ namespace GoogleMap.SDK.UI.WPF.Test
             Image image = (Image)sender;
             GMapMarker marker = (GMapMarker)image.Tag;
             onMarkerClick.Invoke(this, e);
-        }
-
-        void GoogleMapRouteGenerate()
-        {
-
-            string encodePath = "wwzwCgsrdVJs@ZqBlAT~A`@pBZrB^pDt@[jBO|@M|@[nB_@bC]~BK|@GPCJUd@w@bBc@|@a@|@]p@KJCJcArBg@bAWf@g@hAsDjIaAjBOXiAhCaCpF_@rAKVsEdKa@`Aw@fBMZKXaAhCIPINo@vA_BrDi@jAg@~@Yn@Wh@O^iBlEa@`Ae@r@OFi@jAYz@E`@B~AqCnA}At@|@nCFRlDuAvAo@JGv@]`@QZMb@Qf@SfBy@n@Y";
-
-            List<Location> list = GooglePoints.Decode(encodePath).ToList();
-
-            var points = list.Select((x) => new PointLatLng()
-            {
-                Lat = x.Latitude,
-                Lng = x.Longitude,
-            }).ToList();
-
-            GMapRoute route = new GMapRoute(points);
-            mapControl.Markers.Add(route);
-
-            Console.WriteLine(list);
         }
 
         private async void PlaceBtn_Click(object sender, RoutedEventArgs e)
@@ -200,17 +131,14 @@ namespace GoogleMap.SDK.UI.WPF.Test
             Console.WriteLine(directionResModel.geocoded_waypoints[0].place_id);
             Console.WriteLine(directionResModel.routes[0].summary);
 
-            Location[] locationArray = directionResModel.routes[0].overview_polyline.points;
+            List<Location> locationList = directionResModel.routes[0].overview_polyline.points.ToList();
+            mapControl.AddRoute("路線1", locationList);
+        }
 
 
-            var points = locationArray.Select((x) => new PointLatLng()
-            {
-                Lat = x.Latitude,
-                Lng = x.Longitude,
-            }).ToList();
-
-            GMapRoute route = new GMapRoute(points);
-            mapControl.Markers.Add(route);
+        private void MyRoute_mouseRightClick(MyGMapRoute route)
+        {
+            //mapControl.Markers.Remove(route);
         }
     }
 }
