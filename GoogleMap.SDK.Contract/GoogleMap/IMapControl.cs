@@ -10,15 +10,18 @@ namespace GoogleMap.SDK.Contract.GoogleMap
     public interface IMapControl
     {
         delegate void GoogleMapEvent(GoogleMapMarker marker);
-        delegate void RouteEvent(List<Location> route);
+        delegate void RouteEvent(GoogleMapRoute route);
         event GoogleMapEvent MarkerClick;
         event RouteEvent RouteClick;
 
         void ChangePosition(Location point);
 
-        void AddMarker(string str, Location location);
+        void AddMarker(string str, Location location, object tooltip = null);
+
+        void RemoveMarker(string str, Location location);
 
         void AddRoute(string str, List<Location> locationList);
 
+        void RemoveRoute(string str);
     }
 }

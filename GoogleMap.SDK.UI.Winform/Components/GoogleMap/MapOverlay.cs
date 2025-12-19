@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GoogleMap.SDK.Contract.GoogleMap.IMapControl;
 
 namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
 {
@@ -17,7 +18,7 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
         private string _name;
         public string Name { get => _name; set => _name = value; }
 
-        public void AddMarker(Location location)
+        public void AddMarker(Location location, GoogleMapEvent markerEvent = null)
         {
             PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
             GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
@@ -31,11 +32,12 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
             {
                 PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
                 GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
+                //marker.ToolTip = new GMapToolTip();
                 Markers.Add(marker);
             }
         }
 
-        public void AddRoutes(List<Location> routes)
+        public void AddRoutes(List<Location> routes, RouteEvent RouteClick = null)
         {
             List<PointLatLng> pointLatLngs = routes.Select(
                 location => new PointLatLng(location.Latitude, location.Longitude)

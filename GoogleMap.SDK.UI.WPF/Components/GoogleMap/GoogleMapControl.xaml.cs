@@ -47,15 +47,14 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
             mapControl.ShowCenter = false; //不显示中心十字点
             mapControl.DragButton = MouseButton.Left; //左键拖拽地图
             mapControl.Position = new PointLatLng(25.0090256, 121.5027398); //地图中心位置：南京
-
         }
 
 
-        public void AddMarker(string str, Location location)
+        public void AddMarker(string str, Location location, object tooltip = null)
         {
             IOverlay overlay = overlayService.GetLayer(str);
             AddOverlayListener(overlay);
-            overlay.AddMarker(location);
+            overlay.AddMarker(location, MarkerClick, tooltip);
             ChangePosition(location);
         }
 
@@ -63,7 +62,19 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
         {
             IOverlay overlay = overlayService.GetLayer(str);
             AddOverlayListener(overlay);
-            overlay.AddRoutes(locationList);
+            overlay.AddRoutes(locationList, RouteClick);
+        }
+
+        public void RemoveMarker(string str, Location location)
+        {
+            IOverlay overlay = overlayService.GetLayer(str);
+            overlay.RemoveMarker(location);
+        }
+
+        public void RemoveRoute(string str)
+        {
+            IOverlay overlay = overlayService.GetLayer(str);
+            overlay.RemoveRoutes(str);
         }
 
         public void ChangePosition(Location point)
@@ -96,12 +107,13 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (GMapMarker item in e.NewItems)
+                foreach (GMapMarker item in e.OldItems)
                 {
                     mapControl.Markers.Remove(item);
                 }
             }
         }
+
 
     }
 }

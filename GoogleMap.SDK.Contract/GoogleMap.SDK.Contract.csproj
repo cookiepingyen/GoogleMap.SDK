@@ -165,6 +165,7 @@
     <Compile Include="GoogleMapAPI\Service\IRouteService.cs" />
     <Compile Include="GoogleMapAPI\Service\IStaticMapService.cs" />
     <Compile Include="GoogleMap\GoogleMapMarker.cs" />
+    <Compile Include="GoogleMap\GoogleMapRoute.cs" />
     <Compile Include="GoogleMap\IMapControl.cs" />
     <Compile Include="GoogleMap\IOverlay.cs" />
     <Compile Include="GoogleMap\IOverlayService.cs" />

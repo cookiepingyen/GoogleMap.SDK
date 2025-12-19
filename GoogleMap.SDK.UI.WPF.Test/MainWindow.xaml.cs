@@ -30,6 +30,8 @@ using GoogleMap.SDK.Contract.GoogleMapAPI;
 using static GoogleMap.SDK.Contract.GoogleMapAPI.Models.Routes.RoutesResModel;
 using System.Diagnostics;
 using GoogleMap.SDK.Contract.GoogleMap;
+using static GoogleMap.SDK.UI.WPF.GoogleRoute;
+using static GoogleMap.SDK.Contract.GoogleMap.IMapControl;
 
 namespace GoogleMap.SDK.UI.WPF.Test
 {
@@ -43,6 +45,7 @@ namespace GoogleMap.SDK.UI.WPF.Test
         IMapControl mapControl;
         ServiceProvider serviceProvider;
         IGoogleAPIContext googleAPIContext;
+        GoogleMapMarker selectedMarker;
 
         public event EventHandler<MouseButtonEventArgs> onMarkerClick;
 
@@ -71,14 +74,37 @@ namespace GoogleMap.SDK.UI.WPF.Test
             autoCompletePanel.Children.Add(placeBtn);
 
 
+            // 加上 移除marker按鈕
+            Button removeMarkerBtn = new Button();
+            removeMarkerBtn.Content = "移除marker";
+            removeMarkerBtn.Margin = new Thickness(0, 50, 0, 0);
+            removeMarkerBtn.Click += RemoveMarkerBtn_Click;
+            autoCompletePanel.Children.Add(removeMarkerBtn);
+
+
             mapControl = serviceProvider.GetService<IMapControl>();
+            mapControl.RouteClick += MapControl_RouteClick;
+            mapControl.MarkerClick += MapControl_MarkerClick;
             Control control = (Control)mapControl;
             container.Children.Add(control);
             Grid.SetRow(control, 0);
             Grid.SetColumn(control, 1);
         }
 
+        private void RemoveMarkerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mapControl.RemoveMarker("選擇的地點", new Location(selectedMarker.Latitude, selectedMarker.Longitude));
+        }
 
+        private void MapControl_MarkerClick(GoogleMapMarker marker)
+        {
+            selectedMarker = marker;
+        }
+
+        private void MapControl_RouteClick(Contract.GoogleMap.GoogleMapRoute route)
+        {
+            mapControl.RemoveRoute(route.name);
+        }
 
         private void PlaceAutoCompleteView_selectChange(object sender, PlaceDetailResModel e)
         {
@@ -96,7 +122,8 @@ namespace GoogleMap.SDK.UI.WPF.Test
             };
 
             var location = e.result.geometry.location;
-            mapControl.AddMarker("選擇的地點", new Location(location.lat, location.lng));
+
+            mapControl.AddMarker("選擇的地點", new Location(location.lat, location.lng), toolTip);
         }
 
 
@@ -136,9 +163,6 @@ namespace GoogleMap.SDK.UI.WPF.Test
         }
 
 
-        private void MyRoute_mouseRightClick(MyGMapRoute route)
-        {
-            //mapControl.Markers.Remove(route);
-        }
+
     }
 }

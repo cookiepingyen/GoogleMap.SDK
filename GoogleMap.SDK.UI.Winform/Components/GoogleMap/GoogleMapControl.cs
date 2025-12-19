@@ -28,8 +28,6 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
         public event GoogleMapEvent MarkerClick;
         public event RouteEvent RouteClick;
 
-
-
         public GoogleMapControl(IOverlayService overlayService)
         {
             InitializeComponent();
@@ -51,14 +49,14 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
             IOverlay overlay = (IOverlay)item.Tag;
             overlay.RemoveRoutes(overlay.Name);
 
-            List<Location> route = item.Points.Select(x => new Location(x.Lat, x.Lng)).ToList();
-            RouteClick?.Invoke(route);
+            List<Location> locations = item.Points.Select(x => new Location(x.Lat, x.Lng)).ToList();
+            GoogleMapRoute googleMapRoute = new GoogleMapRoute(overlay.Name, locations);
+
+            RouteClick?.Invoke(googleMapRoute);
         }
 
         private void MapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {
-            IOverlay overlay = (IOverlay)item.Tag;
-            overlay.RemoveMarker(new Location(item.Position.Lat, item.Position.Lng));
             MarkerClick?.Invoke(new GoogleMapMarker(item.Position.Lat, item.Position.Lng));
         }
 
@@ -75,6 +73,8 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
         {
             IOverlay overlay = TryGetOverLayer(name);
             overlay.AddRoutes(route);
+
+
         }
 
         public void ChangePosition(Location point)
@@ -95,6 +95,16 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
             return overlay;
         }
 
+        public void RemoveRoute(string str)
+        {
+            IOverlay overlay = overlays[str];
+            mapControl.Overlays.Remove((GMapOverlay)overlay);
+        }
 
+        public void RemoveMarker(string str, Location location)
+        {
+            IOverlay overlay = overlays[str];
+            overlay.RemoveMarker(location);
+        }
     }
 }

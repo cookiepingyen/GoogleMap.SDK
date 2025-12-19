@@ -32,7 +32,7 @@ namespace GoogleMap.SDK.UI.Winform.Test
         IMapControl mapControl;
         ServiceProvider serviceProvider;
         IGoogleAPIContext googleAPIContext;
-
+        GoogleMapMarker selectedMarker;
         public Form1(ServiceProvider serviceProvider, IGoogleAPIContext googleAPIContext)
         {
             this.serviceProvider = serviceProvider;
@@ -62,10 +62,16 @@ namespace GoogleMap.SDK.UI.Winform.Test
             panel2.Controls.Add(map);
         }
 
+        private void RemoveMarkerBtn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void MapControl_MarkerClick(GoogleMapMarker marker)
         {
             Console.WriteLine("Click");
             Console.WriteLine(marker.ToString());
+            selectedMarker = marker;
         }
 
         private async void PlaceBtn_Click(object sender, EventArgs e)
@@ -92,7 +98,7 @@ namespace GoogleMap.SDK.UI.Winform.Test
             this.mapControl.RouteClick += MapControl_RouteClick;
         }
 
-        private void MapControl_RouteClick(List<Location> route)
+        private void MapControl_RouteClick(GoogleMapRoute route)
         {
             Console.WriteLine("route click");
         }
@@ -107,6 +113,11 @@ namespace GoogleMap.SDK.UI.Winform.Test
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            mapControl.RemoveMarker("好吃的地點", new Location(selectedMarker.Latitude, selectedMarker.Longitude));
         }
     }
 }

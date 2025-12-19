@@ -12,26 +12,33 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using static GoogleMap.SDK.Contract.GoogleMap.IMapControl;
 
 namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
 {
     public class MapOverlay : IOverlay
     {
         public readonly ObservableCollection<GMapMarker> Markers = new ObservableCollection<GMapMarker>();
-
         public readonly ObservableCollection<GMapRoute> Routes = new ObservableCollection<GMapRoute>();
+
+        public event GoogleMapEvent MarkerClick;
+
 
         private string _name;
         public string Name { get => _name; set => _name = value; }
 
-        public void AddMarker(Location location)
+        public void AddMarker(Location location, GoogleMapEvent markerEvent = null, object tooltip = null)
         {
             PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
             Image dynamicImage = new Image();
             dynamicImage.Width = 32;
             dynamicImage.Height = 32;
-            dynamicImage.MouseLeftButtonDown += Marker_MouseLeftButtonDown;
-            dynamicImage.MouseRightButtonDown += Marker_MouseRightButtonDown;
+            dynamicImage.Tag = location;
+            dynamicImage.ToolTip = tooltip;
+            dynamicImage.MouseRightButtonDown += (sender, e) =>
+            {
+                markerEvent?.Invoke(new GoogleMapMarker(location.Latitude, location.Longitude));
+            };
 
 
             // 設定圖片來源
@@ -47,6 +54,7 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
                 Shape = dynamicImage
             };
             marker.Tag = this;
+
             Markers.Add(marker);
         }
 
@@ -60,26 +68,22 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
             }
         }
 
-        private void Marker_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Marker_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        public void AddRoutes(List<Location> routes)
+        public void AddRoutes(List<Location> routes, RouteEvent RouteClick = null)
         {
             List<PointLatLng> pointLatLngs = routes.Select(
                 location => new PointLatLng(location.Latitude, location.Longitude)
                 ).ToList();
 
-            GMapRoute route = new GMapRoute(pointLatLngs);
+
+            GoogleRoute route = new GoogleRoute(Name, pointLatLngs, RouteClick);
             Routes.Add(route);
+        }
+
+        private void Marker_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image markerImage = (Image)sender;
+            Location location = (Location)markerImage.Tag;
+            MarkerClick?.Invoke(new GoogleMapMarker(location.Latitude, location.Longitude));
         }
 
         public void RemoveMarker(Location location)
@@ -90,13 +94,20 @@ namespace GoogleMap.SDK.UI.WPF.Components.GoogleMap
 
         public void RemoveMarkers(List<Location> locations)
         {
-            throw new NotImplementedException();
+            foreach (Location location in locations)
+            {
+                RemoveMarker(location);
+            }
         }
 
-        public void RemoveRoutes(string name)
+        public void RemoveRoutes(string name = null)
         {
-            //var route = Routes.First(x => x.Name == this.Name);
-            //Routes.Remove(route);
+            var routes = Routes.ToList();
+
+            foreach (GMapRoute gMapRoute in routes)
+            {
+                Routes.Remove(gMapRoute);
+            }
         }
     }
 }

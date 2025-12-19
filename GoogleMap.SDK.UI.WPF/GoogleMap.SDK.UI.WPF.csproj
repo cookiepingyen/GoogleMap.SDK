@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="Components\GoogleMap\MapOverlay.cs" />
     <Compile Include="GoogleMapWPFRegistration.cs" />
+    <Compile Include="GoogleRoute.cs" />
     <Compile Include="Utility\Debounce.cs" />
     <Page Include="Components\GoogleMap\GoogleMapControl.xaml">
       <SubType>Designer</SubType>
