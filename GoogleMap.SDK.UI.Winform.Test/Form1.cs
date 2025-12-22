@@ -106,7 +106,8 @@ namespace GoogleMap.SDK.UI.Winform.Test
         private void PlaceAutoCompleteView_selectChange(object sender, PlaceDetailResModel e)
         {
             var location = e.result.geometry.location;
-            this.mapControl.AddMarker("好吃的地點", new Location(location.lat, location.lng));
+
+            this.mapControl.AddMarker("好吃的地點", new Location(location.lat, location.lng), e.result.name);
             Console.WriteLine($"name: {e.result.name}, place_id: {e.result.place_id}");
         }
 

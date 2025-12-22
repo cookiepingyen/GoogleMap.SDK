@@ -61,10 +61,10 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
         }
 
 
-        public void AddMarker(string name, Location location)
+        public void AddMarker(string name, Location location, object tooltip = null)
         {
             IOverlay overlay = TryGetOverLayer(name);
-            overlay.AddMarker(location);
+            overlay.AddMarker(location, tooltip: tooltip);
             ChangePosition(location);
 
         }

@@ -6,6 +6,7 @@ using GoogleMap.SDK.Contract.GoogleMapAPI.Models;
 using GoogleMap.SDK.Contract.GoogleMapAPI.Models.StaticMap;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,20 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
         private string _name;
         public string Name { get => _name; set => _name = value; }
 
-        public void AddMarker(Location location, GoogleMapEvent markerEvent = null)
+        public void AddMarker(Location location, GoogleMapEvent markerEvent = null, object tooltop = null)
         {
             PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
             GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
             marker.Tag = this;
+            marker.ToolTipText = tooltop.ToString();
+
+            // tooltip
+            GMapToolTip gMapToolTip = new GMapToolTip(marker);
+            gMapToolTip.Fill = new SolidBrush(Color.FromArgb(100, Color.Black));
+            gMapToolTip.Foreground = Brushes.White;
+            gMapToolTip.TextPadding = new System.Drawing.Size(20, 20);
+            marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            marker.ToolTip = gMapToolTip;
             Markers.Add(marker);
         }
 
@@ -32,7 +42,7 @@ namespace GoogleMap.SDK.UI.Winform.Components.GoogleMap
             {
                 PointLatLng point = new PointLatLng(location.Latitude, location.Longitude);
                 GMapMarker marker = new GMarkerGoogle(point, GMarkerGoogleType.red_dot);
-                //marker.ToolTip = new GMapToolTip();
+                marker.Tag = this;
                 Markers.Add(marker);
             }
         }
